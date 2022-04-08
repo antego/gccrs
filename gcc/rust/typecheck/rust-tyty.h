@@ -291,6 +291,9 @@ public:
 
   static TyVar get_implicit_infer_var (Location locus);
 
+  static TyVar subst_covariant_var (TyTy::BaseType *orig,
+				    TyTy::BaseType *subst);
+
 private:
   HirId ref;
 };
@@ -429,10 +432,10 @@ public:
 
   bool is_concrete () const override final
   {
-    if (!can_resolve ())
+    auto r = resolve ();
+    if (r == this)
       return false;
 
-    auto r = resolve ();
     return r->is_concrete ();
   }
 
@@ -578,11 +581,7 @@ public:
 
   bool needs_substitution () const
   {
-    auto p = get_param_ty ();
-    if (!p->can_resolve ())
-      return true;
-
-    return p->resolve ()->get_kind () == TypeKind::PARAM;
+    return !(get_param_ty ()->is_concrete ());
   }
 
   Location get_param_locus () const { return generic.get_locus (); }

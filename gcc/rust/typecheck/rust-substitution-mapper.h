@@ -83,7 +83,13 @@ public:
 	if (mappings.is_error ())
 	  return;
 
+	rust_debug ("HANDLE_SUBST111");
+	type.debug ();
+	rust_debug ("subst: %s", mappings.as_string ().c_str ());
+
 	concrete = type.handle_substitions (mappings);
+
+	concrete->debug ();
       }
 
     if (concrete != nullptr)

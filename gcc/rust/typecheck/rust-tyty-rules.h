@@ -1327,14 +1327,10 @@ public:
   // to handle the typing of the struct
   BaseType *unify (BaseType *other) override final
   {
-    if (base->get_ref () == base->get_ty_ref ())
+    if (!base->can_resolve ())
       return BaseRules::unify (other);
 
-    auto context = Resolver::TypeCheckContext::get ();
-    BaseType *lookup = nullptr;
-    bool ok = context->lookup_type (base->get_ty_ref (), &lookup);
-    rust_assert (ok);
-
+    auto lookup = base->resolve ();
     return lookup->unify (other);
   }
 

@@ -1271,14 +1271,10 @@ public:
   // to handle the typing of the struct
   bool can_eq (const BaseType *other) override
   {
-    if (base->get_ref () == base->get_ty_ref ())
+    if (!base->can_resolve ())
       return BaseCmp::can_eq (other);
 
-    auto context = Resolver::TypeCheckContext::get ();
-    BaseType *lookup = nullptr;
-    bool ok = context->lookup_type (base->get_ty_ref (), &lookup);
-    rust_assert (ok);
-
+    auto lookup = base->resolve ();
     return lookup->can_eq (other, emit_error_flag);
   }
 

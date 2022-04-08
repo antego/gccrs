@@ -297,6 +297,9 @@ TypeBoundPredicateItem::get_tyty_for_receiver (const TyTy::BaseType *receiver)
   SubstitutionArg self (sarg.get_param_mapping (), receiver->clone ());
   gargs.get_mappings ()[0] = self;
 
+  rust_debug ("get_tyty_for_receiver: %s", gargs.as_string ().c_str ());
+  trait_item_tyty->debug ();
+
   return Resolver::SubstMapperInternal::Resolve (trait_item_tyty, gargs);
 }
 bool

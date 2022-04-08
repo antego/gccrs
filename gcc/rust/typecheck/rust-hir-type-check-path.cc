@@ -156,7 +156,11 @@ TypeCheckExpr::visit (HIR::PathInExpression &expr)
 	  == 0;
       if (!is_big_self && tyseg->needs_generic_substitutions ())
 	{
+	  rust_debug ("PATH NEEDS SUBST");
+	  tyseg->debug ();
+
 	  tyseg = SubstMapper::InferSubst (tyseg, locus);
+	  tyseg->debug ();
 	}
 
       infered = tyseg;

@@ -194,6 +194,9 @@ public:
 	return;
       }
 
+    rust_debug ("CALL EXPR");
+    function_tyty->debug ();
+
     TyTy::VariantDef &variant = TyTy::VariantDef::get_error_node ();
     if (function_tyty->get_kind () == TyTy::TypeKind::ADT)
       {
@@ -254,6 +257,9 @@ public:
 	  expr.get_method_name ().get_segment ().as_string ().c_str ());
 	return;
       }
+
+    rust_debug_loc (expr.get_locus (), "RESOLVED METHOD TO:");
+    candidate.candidate.ty->debug ();
 
     // Get the adjusted self
     Adjuster adj (receiver_tyty);
@@ -357,8 +363,11 @@ public:
       }
     else if (lookup->needs_generic_substitutions ())
       {
+	rust_debug ("METHOD CALL NEEDS INFERENCE 1");
+	lookup->debug ();
 	lookup = SubstMapper::InferSubst (lookup,
 					  expr.get_method_name ().get_locus ());
+	lookup->debug ();
       }
 
     TyTy::BaseType *function_ret_tyty
