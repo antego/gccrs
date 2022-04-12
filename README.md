@@ -54,6 +54,9 @@ $ make
 
 The path of header dir and sysroot should be specified when you configure the project.
 ```bash
+$ cd gccrs
+$ contrib/download_prerequisites
+$ cd ..
 $ mkdir mac-build
 $ cd mac-build
 $ ../gccrs/configure --prefix=$HOME/gccrs-install --disable-bootstrap --enable-multilib --enable-languages=rust --with-native-system-header-dir=/usr/include --with-sysroot=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk 
